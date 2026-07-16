@@ -1,4 +1,8 @@
 
+<p align="center">
+  <img src="https://i.ibb.co/CKs6JD6W/Capture-d-cran-2026-07-16-223013.png" alt="Fladder Discord Rich Presence" width="400">
+</p>
+
 <h1 align="center">
   <br>
     <a href="https://github.com/DonutWare/Fladder"><img src="https://raw.githubusercontent.com/DonutWare/Fladder/refs/heads/develop/icons/production/fladder_macos_icon.png" alt="Fladder" width="200"></a>
@@ -47,6 +51,7 @@
 * Next-up overview when watching a queue
 * Server management
 * Seerr/Jellyseerr integration
+* Discord Rich Presence (desktop)
 * Platforms
   - Android + TV
   - Web + Docker
