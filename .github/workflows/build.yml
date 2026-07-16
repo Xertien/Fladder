@@ -117,6 +117,8 @@ jobs:
         shell: bash
 
   build-android:
+    # Skipped on this fork: release signing requires the upstream keystore secrets
+    if: false
     needs: [fetch-info]
     runs-on: ubuntu-latest
     outputs:
@@ -463,7 +465,6 @@ jobs:
     name: Create Release
     needs:
       - fetch-info
-      - build-android
       - build-windows
       - build-ios
       - build-macos
@@ -558,19 +559,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download Artifacts Android
-        uses: actions/download-artifact@v4
-        with:
-          name: fladder-android
-          path: fladder-android
-
-      - name: Move Android
-        run: |
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-armeabi-v7a.apk Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-arm64-v8a.apk Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-x86_64.apk Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}.aab Fladder-Android-${{ steps.version.outputs.version }}.aab
-
       - name: Download Windows portable artifact
         uses: actions/download-artifact@v4
         with:
@@ -664,10 +652,6 @@ jobs:
           generate_release_notes: ${{ needs.fetch-info.outputs.build_type == 'release' }}
           fail_on_unmatched_files: true
           files: |
-            Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk
-            Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk
-            Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk
-            Fladder-Android-${{ steps.version.outputs.version }}.aab
             Fladder-Windows-${{ steps.version.outputs.version }}-Setup.exe
             Fladder-Windows-${{ steps.version.outputs.version }}.zip
             Fladder-iOS-${{ steps.version.outputs.version }}.ipa
@@ -679,30 +663,6 @@ jobs:
             ${{ needs.fetch-info.outputs.build_type == 'release' && format('Fladder-Linux-{0}.flatpak', steps.version.outputs.version) || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  release_play_console:
-    name: Upload AAB to Google Play Console
-    needs:
-      - fetch-info
-      - create_release
-      - build-android
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifacts Android
-        uses: actions/download-artifact@v4
-        with:
-          name: fladder-android
-          path: fladder-android
-
-      - name: Upload AAB to Google Play Console
-        uses: r0adkll/upload-google-play@v1.1.3
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          packageName: "nl.jknaapen.fladder"
-          releaseFiles: "fladder-android/${{ needs.build-android.outputs.artifact_suffix }}.aab"
-          track: ${{ needs.fetch-info.outputs.build_type == 'nightly' && 'internal' || 'production' }}
-          status: ${{ needs.fetch-info.outputs.build_type == 'nightly' && 'completed' || 'draft' }}
-          releaseName: "${{ github.run_number }} (${{ needs.fetch-info.outputs.version_name }})"
 
   release_web:
     name: Release Web
