@@ -11,6 +11,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:fladder/bootstrap/platform/base_app_wrapper.dart';
 import 'package:fladder/logic/application_menu.dart';
 import 'package:fladder/providers/arguments_provider.dart';
+import 'package:fladder/providers/discord_rpc_provider.dart';
 import 'package:fladder/providers/settings/client_settings_provider.dart';
 import 'package:fladder/providers/video_player_provider.dart';
 import 'package:fladder/src/application_menu.g.dart';
@@ -35,6 +36,8 @@ class _DesktopAppWrapperState extends BaseAppWrapperState<DesktopAppWrapper> wit
     }
 
     ApplicationMenu.setUp(ApplicationMenuImp());
+
+    ref.read(discordRpcProvider);
 
     await WindowManager.instance.ensureInitialized();
     windowManager.addListener(this);

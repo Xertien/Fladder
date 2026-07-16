@@ -114,5 +114,7 @@ class ClientSettingsNotifier extends StateNotifier<ClientSettingsModel> {
 
   void setBlurEffects(bool value) => state = state.copyWith(enableBlurEffects: value);
 
+  void setDiscordRichPresence(bool value) => state = state.copyWith(discordRichPresence: value);
+
   void toggleSideBar() => state = state.copyWith(expandSideBar: !state.expandSideBar);
 }

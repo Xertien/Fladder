@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:fladder/providers/discord_rpc_provider.dart';
 import 'package:fladder/providers/settings/client_settings_provider.dart';
 import 'package:fladder/providers/shared_provider.dart';
 import 'package:fladder/routes/auto_router.gr.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_advanced.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_dashboard.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_download.dart';
+import 'package:fladder/screens/settings/client_sections/client_settings_integrations.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_shortcuts.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_theme.dart';
 import 'package:fladder/screens/settings/client_sections/client_settings_visual.dart';
@@ -93,6 +95,10 @@ class _ClientSettingsPageState extends ConsumerState<ClientSettingsPage> {
               ),
             ),
           ]),
+          const SizedBox(height: 12),
+        ],
+        if (DiscordRpcService.supported) ...[
+          ...buildClientSettingsIntegrations(context, ref),
           const SizedBox(height: 12),
         ],
         ...buildClientSettingsAdvanced(context, ref),

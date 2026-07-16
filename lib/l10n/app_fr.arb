@@ -2019,5 +2019,10 @@
     "musicDashboard": "Tableau de bord musical",
     "quiet": "Faible",
     "loud": "Fort",
-    "toggleSubtitles": "Afficher/Masquer les sous-titres"
+    "toggleSubtitles": "Afficher/Masquer les sous-titres",
+    "integrations": "Intégrations",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Affiche ce que vous regardez ou écoutez sur votre profil Discord. Nécessite que l'application Discord soit ouverte.",
+    "paused": "En pause",
+    "idling": "Inactif"
 }
