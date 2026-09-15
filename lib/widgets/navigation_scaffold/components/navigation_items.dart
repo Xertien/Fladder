@@ -280,6 +280,8 @@ class FilterNavigationItem extends ConsumerWidget {
 
     final selected = context.router.currentUrl.contains(filter.navKey.toString());
 
+    final viewNames = filter.viewNames.isEmpty ? views.map((e) => e.name).join(", ") : filter.viewNames.join(", ");
+
     final actions = [
       ItemActionButton(
         label: Text(context.localized.hideInSideBar),
@@ -287,8 +289,6 @@ class FilterNavigationItem extends ConsumerWidget {
         action: () => ref.read(userProvider.notifier).hideFilterFromSideBar(filter),
       )
     ];
-
-    final viewNames = views.map((e) => e.name).join(", ");
 
     return CustomTooltip(
       tooltipContent: Container(

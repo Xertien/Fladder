@@ -1970,5 +1970,6 @@
     "discordRichPresenceTitle": "Discord Rich Presence",
     "discordRichPresenceDesc": "Mostra cosa stai guardando o ascoltando sul tuo profilo Discord. Richiede l'app desktop di Discord in esecuzione.",
     "paused": "In pausa",
-    "idling": "Inattivo"
+    "idling": "Inattivo",
+    "instantMix": "Mix istantaneo"
 }

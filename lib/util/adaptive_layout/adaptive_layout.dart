@@ -5,10 +5,13 @@ import 'package:flutter/material.dart' hide ConnectionState;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:fladder/bootstrap/app_bootstrap.dart';
+import 'package:fladder/models/settings/arguments_model.dart';
 import 'package:fladder/models/settings/home_settings_model.dart';
 import 'package:fladder/providers/arguments_provider.dart';
 import 'package:fladder/providers/connectivity_provider.dart';
 import 'package:fladder/providers/incognito_mode_provider.dart';
+import 'package:fladder/providers/settings/client_settings_provider.dart';
 import 'package:fladder/providers/settings/home_settings_provider.dart';
 import 'package:fladder/screens/home_screen.dart';
 import 'package:fladder/util/adaptive_layout/adaptive_layout_model.dart';
@@ -155,6 +158,37 @@ class _AdaptiveLayoutBuilderState extends ConsumerState<AdaptiveLayoutBuilder> {
   final Map<HomeTabs, ScrollController> scrollControllers = {
     for (var item in HomeTabs.values) item: ScrollController(),
   };
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkLeanBackMode();
+    });
+  }
+
+  Future<void> checkLeanBackMode() async {
+    final currentArgs = ref.read(argumentsStateProvider);
+    final isForced = ref.read(clientSettingsProvider).forceLeanBackMode;
+
+    bool shouldEnable = currentArgs.leanBackMode || isForced;
+
+    if (!shouldEnable && defaultTargetPlatform == TargetPlatform.android) {
+      shouldEnable = await resolveLeanBackEnabled();
+    }
+
+    if (!shouldEnable) return;
+
+    leanBackMode = true;
+
+    if (!currentArgs.leanBackMode) {
+      ref.read(argumentsStateProvider.notifier).update((state) => state.copyWith(leanBackMode: true));
+    }
+
+    if (!isForced) {
+      ref.read(clientSettingsProvider.notifier).setForceLeanBackMode(true);
+    }
+  }
 
   @override
   void didChangeDependencies() {

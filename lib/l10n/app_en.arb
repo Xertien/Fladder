@@ -509,6 +509,16 @@
       }
     }
   },
+  "mediaTypeMusicVideo": "{count, plural, one{Music Video} other{Music Videos}}",
+  "@mediaTypeMusicVideo": {
+    "description": "Music Video (plural)",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
   "mediaTypePhoto": "{count, plural, one{Photo} other{Photos}}",
   "@mediaTypePhoto": {
     "description": "Photo (plural)",
@@ -1736,6 +1746,10 @@
   "settingsLocalUrlTitle": "Local Jellyfin URL",
   "settingsLocalUrlSetTitle": "Configure Local Jellyfin URL",
   "settingsLocalUrlSetDesc": "Specify the local Jellyfin address. Fladder will automatically use this URL when your device is on the same network.",
+  "localNetworkPermissionRequest": "Allow local network access to discover servers.",
+  "requestPermission": "Request Permission",
+  "localNetworkPermissionDenied": "Local network access is required. Enable devices nearby permission in system settings.",
+  "openSettings": "Open Settings",
   "regenerateTrickplayImages": "Regenerate trickplay images",
   "controlPanel": "Control Panel",
   "@controlPanel": {},
@@ -2456,6 +2470,12 @@
   },
   "removeFromQueue": "Remove from queue",
   "@removeFromQueue": {},
+  "lyrics": "Lyrics",
+  "@lyrics": {},
+  "returnToSyncedLyrics": "Return to synced lyrics",
+  "@returnToSyncedLyrics": {},
+  "noSyncedLyrics": "No synced lyrics available",
+  "@noSyncedLyrics": {},
   "noPrograms": "No programs available",
   "switchChannel": "Switch channel",
   "switchChannelDesc": "Do you want to watch \"{programName}\" on {channelName}?",
@@ -2816,5 +2836,38 @@
   "discordRichPresenceTitle": "Discord Rich Presence",
   "discordRichPresenceDesc": "Show what you're watching or listening to on your Discord profile. Requires the Discord desktop app to be running.",
   "paused": "Paused",
-  "idling": "Idling"
+  "idling": "Idling",
+  "openSelected": "Open selected",
+  "discography": "Discography",
+  "youLiked": "You liked",
+  "instantMixBy": "Instant Mix of {artist}",
+  "@instantMixBy": {
+    "description": "Instant Mix of artist",
+    "placeholders": {
+      "artist": {
+        "type": "String"
+      }
+    }
+  },
+  "latestTracksBy": "Latest tracks by {artist}",
+  "@latestTracksBy": {
+    "description": "Latest tracks by artist",
+    "placeholders": {
+      "artist": {
+        "type": "String"
+      }
+    }
+  },
+  "favoritesOf": "Favorites of {artist}",
+  "@favoritesOf": {
+    "description": "Favorites of artist",
+    "placeholders": {
+      "artist": {
+        "type": "String"
+      }
+    }
+  },
+  "leanBackModeTitle": "Lean-back Mode",
+  "leanBackModeDesc": "Enable lean-back mode on Android devices, even if the device reports back as false.",
+  "leanBackModeInfo": "Lean-back mode is re-enabled by default on AndroidTV devices. Toggling this option on non-AndroidTV devices may cause unexpected behavior."
 }

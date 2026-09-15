@@ -74,10 +74,12 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
     final isFolder = views.keys.map((e) => e.id).toList().containsAny(parentIds) == false && parentIds.isNotEmpty;
 
-    if (isFolder) {
-      await loadFolders(folderId: parentIds);
-    } else {
-      state = state.copyWith(views: views);
+    if (!wasInitialized) {
+      if (isFolder) {
+        await loadFolders(folderId: parentIds);
+      } else {
+        state = state.copyWith(views: views);
+      }
     }
 
     final firstView = state.views.included.firstWhereOrNull((element) => parentIds.contains(element.id) == true);
@@ -111,26 +113,6 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
     final newLastIndices = Map<String, int>.from(state.lastIndices);
     final newLibraryItemCounts = Map<String, int>.from(state.libraryItemCounts);
     final isEmpty = newLastIndices.isEmpty;
-
-    Future<void> handleItemLoading(String itemId, ItemBaseModel currentModel) async {
-      final lastIndices = newLastIndices[itemId];
-      final libraryTotalCount = newLibraryItemCounts[itemId];
-      if (libraryTotalCount != null && lastIndices != null && libraryTotalCount <= lastIndices) return;
-
-      final result = currentModel is PlaylistModel
-          ? await _loadPlaylistItems(id: itemId, startIndex: lastIndices, limit: pageSize)
-          : await _loadLibrary(id: itemId, startIndex: lastIndices, limit: pageSize);
-
-      if (result != null) {
-        newLibraryItemCounts[itemId] = result.totalRecordCount ?? 0;
-        newLastIndices[itemId] = (lastIndices ?? 0) + result.items.length;
-        state = state.copyWith(
-          posters: isEmpty ? result.items : [...state.posters, ...result.items],
-          lastIndices: newLastIndices,
-          libraryItemCounts: newLibraryItemCounts,
-        );
-      }
-    }
 
     Future<void> handleViewLoading() async {
       final results = await Future.wait(
@@ -170,8 +152,46 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
       );
     }
 
+    Future<void> handleFolderLoading() async {
+      final results = await Future.wait(
+        state.folderOverwrite.included.map((folder) async {
+          final lastIndices = newLastIndices[folder.id];
+          final libraryTotalCount = newLibraryItemCounts[folder.id];
+          if (libraryTotalCount != null && lastIndices != null && libraryTotalCount <= lastIndices) return null;
+
+          final libraryItems = await _loadLibrary(
+            id: folder.id,
+            startIndex: lastIndices,
+            limit: pageSize ~/ state.folderOverwrite.length,
+          );
+
+          if (libraryItems != null) {
+            newLibraryItemCounts[folder.id] = libraryItems.totalRecordCount ?? 0;
+            newLastIndices[folder.id] = (lastIndices ?? 0) + libraryItems.items.length;
+          }
+          return libraryItems;
+        }).nonNulls,
+      );
+
+      List<ItemBaseModel> newPosters = results.nonNulls.expand((element) => element.items).toList();
+      if (state.folderOverwrite.length > 1) {
+        if (state.filters.sortingOption == SortingOptions.random) {
+          newPosters = newPosters.random();
+        } else {
+          newPosters = newPosters.sorted(
+            (a, b) => sortItems(a, b, state.filters.sortingOption, state.filters.sortOrder),
+          );
+        }
+      }
+      state = state.copyWith(
+        posters: isEmpty ? newPosters : [...state.posters, ...newPosters],
+        lastIndices: newLastIndices,
+        libraryItemCounts: newLibraryItemCounts,
+      );
+    }
+
     if (state.folderOverwrite.isNotEmpty) {
-      await handleItemLoading(state.folderOverwrite.last.id, state.folderOverwrite.last);
+      await handleFolderLoading();
     } else if (!state.views.hasEnabled) {
       if (state.filters.searchQuery.isEmpty && state.filters.favourites != true) {
         state = state.copyWith(posters: []);
@@ -189,22 +209,27 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
   Future<Map<ViewModel, bool>> loadViews(
     List<String>? viewModelId,
   ) async {
-    final response = await api.usersUserIdViewsGet(includeHidden: false);
-    final createdViews = response.body?.items?.map((e) => ViewModel.fromBodyDto(e, ref));
+    try {
+      final response = await api.usersUserIdViewsGet(includeHidden: false);
+      final createdViews = response.body?.items?.map((e) => ViewModel.fromBodyDto(e, ref));
 
-    Map<ViewModel, bool> mappedModels =
-        createdViews?.isNotEmpty ?? false ? {for (var element in createdViews!) element: false} : {};
+      Map<ViewModel, bool> mappedModels =
+          createdViews?.isNotEmpty ?? false ? {for (var element in createdViews!) element: false} : {};
 
-    final selectedModels = mappedModels.keys.where((element) => viewModelId?.contains(element.id) ?? false).toList();
+      final selectedModels = mappedModels.keys.where((element) => viewModelId?.contains(element.id) ?? false).toList();
 
-    final views = mappedModels.setKeys(selectedModels, true);
+      final views = mappedModels.setKeys(selectedModels, true);
 
-    return views;
+      return views;
+    } catch (e) {
+      log("Error loading views: $e");
+      return {};
+    }
   }
 
   Future<void> loadFolders({List<String>? folderId}) async {
     final response = await api.itemsGet(
-      ids: folderId ?? state.folderOverwrite.map((e) => e.id).toList(),
+      ids: folderId ?? state.folderOverwrite.keys.map((e) => e.id).toList(),
       sortBy: state.filters.sortingOption.toSortBy,
       sortOrder: [state.filters.sortOrder.sortOrder],
       fields: [
@@ -213,21 +238,32 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
       ],
     );
 
-    state = state.copyWith(folderOverwrite: response.body?.items.toList() ?? []);
+    state = state.copyWith(
+      folderOverwrite: response.body?.items.toList().asMap().map((key, value) => MapEntry(value, true)) ?? {},
+    );
   }
 
   Future<void> loadFilters(LibraryFilterModel filters) async {
     if (loadedFilters == true) return;
     loadedFilters = true;
 
+    final disabledYearTypes = {
+      FladderItemType.photo,
+      FladderItemType.photoAlbum,
+      FladderItemType.video,
+    };
+
     final itemIds = state.currentIds;
 
     final enabledCollections = state.views.included.map((e) => e.collectionType.itemKinds).expand((element) => element);
+    final disableYearFetching =
+        state.folderOverwrite.isNotEmpty || enabledCollections.any((e) => disabledYearTypes.contains(e));
 
     final mappedListFuture = Future.wait(itemIds.map((id) => _loadFilters(id)));
     final studiosFuture = Future.wait(itemIds.map((id) => _loadStudios(id)));
     final genresFuture = Future.wait(itemIds.map((id) => _loadGenres(id)));
-    final yearsFuture = Future.wait(itemIds.map((id) => _loadYears(id)));
+    final yearsFuture =
+        disableYearFetching ? Future.value(<List<int>>[]) : Future.wait(itemIds.map((id) => _loadYears(id)));
 
     final mappedList = await mappedListFuture;
     final studiosRaw = await studiosFuture;
@@ -357,8 +393,13 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
   Future<List<ItemBaseModel>> fetchSuggestions(String searchTerm, {int limit = 25}) async {
     if (state.folderOverwrite.isNotEmpty) {
-      final response = await _loadLibrary(id: state.nestedCurrentItem?.id ?? "", searchTerm: searchTerm, limit: limit);
-      return response?.items ?? [];
+      final mappedList = await Future.wait(state.folderOverwrite.included
+          .map((folder) => _loadLibrary(id: folder.id, limit: limit, searchTerm: searchTerm)));
+      return mappedList
+          .expand((innerList) => innerList?.items ?? [])
+          .where((item) => item != null)
+          .cast<ItemBaseModel>()
+          .toList();
     } else {
       if (state.views.hasEnabled) {
         final mappedList = await Future.wait(state.views.included
@@ -405,7 +446,7 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
   void setViews(Map<ViewModel, bool> views) {
     loadedFilters = false;
-    state = state.copyWith(views: views).setFiltersToDefault();
+    state = state.copyWith(views: views);
   }
 
   void setGenres(Map<String, bool> genres) => state = state.copyWith(filters: state.filters.copyWith(genres: genres));
@@ -433,16 +474,6 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
       filters: state.filters.clear(),
     );
   }
-
-  void setFolderId(ItemBaseModel item) {
-    if (state.folderOverwrite.contains(item)) return;
-    state = state.copyWith(folderOverwrite: [...state.folderOverwrite, item]);
-  }
-
-  void backToFolder(ItemBaseModel item) => state = state.copyWith(
-      folderOverwrite: state.folderOverwrite.getRange(0, state.folderOverwrite.indexOf(item) + 1).toList());
-
-  void clearFolderOverWrite() => state = state.copyWith(folderOverwrite: []);
 
   void toggleSelectMode() =>
       state = state.copyWith(selecteMode: !state.selecteMode, selectedPosters: !state.selecteMode == false ? [] : []);
@@ -483,26 +514,27 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
   Future<Response> removeSelectedFromCollection() async {
     final response = await api.collectionsCollectionIdItemsDelete(
-        collectionId: state.nestedCurrentItem?.id, ids: state.selectedPosters.map((e) => e.id).toList());
+        collectionId: state.folderOverwrite.included.firstOrNull?.id,
+        ids: state.selectedPosters.map((e) => e.id).toList());
     if (response.isSuccessful) {
-      removeFromPosters([state.nestedCurrentItem?.id].nonNulls.toList());
+      removeFromPosters([state.folderOverwrite.included.firstOrNull?.id].nonNulls.toList());
     }
     return response;
   }
 
   Future<Response> removeSelectedFromPlaylist() async {
     final response = await api.playlistsPlaylistIdItemsDelete(
-        playlistId: state.nestedCurrentItem?.id,
+        playlistId: state.folderOverwrite.included.firstOrNull?.id,
         entryIds: state.selectedPosters.map((e) => e.playlistId).nonNulls.toList());
     if (response.isSuccessful) {
-      removeFromPosters([state.nestedCurrentItem?.id].nonNulls.toList());
+      removeFromPosters([state.folderOverwrite.included.firstOrNull?.id].nonNulls.toList());
     }
     return response;
   }
 
   Future<Response> removeFromCollection({required List<ItemBaseModel> items}) async {
     final response = await api.collectionsCollectionIdItemsDelete(
-        collectionId: state.nestedCurrentItem?.id, ids: items.map((e) => e.id).toList());
+        collectionId: state.folderOverwrite.included.firstOrNull?.id, ids: items.map((e) => e.id).toList());
     if (response.isSuccessful) {
       removeFromPosters(items.map((e) => e.id).toList());
     }
@@ -511,7 +543,8 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
   Future<Response> removeFromPlaylist({required List<ItemBaseModel> items}) async {
     final response = await api.playlistsPlaylistIdItemsDelete(
-        playlistId: state.nestedCurrentItem?.id, entryIds: items.map((e) => e.playlistId).nonNulls.toList());
+        playlistId: state.folderOverwrite.included.firstOrNull?.id,
+        entryIds: items.map((e) => e.playlistId).nonNulls.toList());
     if (response.isSuccessful) {
       removeFromPosters(items.map((e) => e.id).toList());
     }
@@ -537,14 +570,22 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
   void updateUserDataMain(UserData? userData) {
     state = state.copyWith(
-      folderOverwrite: [state.folderOverwrite.lastOrNull?.copyWith(userData: userData)].nonNulls.toList(),
+      folderOverwrite: state.folderOverwrite.map((key, value) {
+        if (value == true) {
+          return MapEntry(key.copyWith(userData: userData), value);
+        }
+        return MapEntry(key, value);
+      }),
     );
   }
 
   void updateParentItem(ItemBaseModel item) {
-    state = state.copyWith(
-      folderOverwrite: [item],
-    );
+    state = state.copyWith(folderOverwrite: state.folderOverwrite.map((key, value) {
+      if (value == true) {
+        return MapEntry(item, value);
+      }
+      return MapEntry(key, value);
+    }));
   }
 
   void removeFromPosters(List<String> ids) {
@@ -595,7 +636,7 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
     }
 
     if (state.folderOverwrite.isNotEmpty) {
-      await handleItemLoading(state.folderOverwrite.last.id, state.folderOverwrite.last);
+      await handleItemLoading(state.folderOverwrite.included.last.id, state.folderOverwrite.included.last);
     } else if (state.views.hasEnabled) {
       await handleViewLoading();
     } else {
@@ -660,20 +701,19 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
   }
 
   PlaybackQueueSource? _createMusicQueueSource({required bool shuffle}) {
-    final recursive = state.filters.searchQuery.isNotEmpty ? true : state.filters.recursive;
-
     if (state.folderOverwrite.isNotEmpty) {
-      final currentItem = state.folderOverwrite.last;
+      final currentItem = state.folderOverwrite.keys.last;
       if (currentItem is PlaylistModel) {
         return PlaylistAudioQueueSource(
           playlistId: currentItem.id,
           limit: _libraryMusicRefillLimit,
+          shuffle: shuffle,
         );
       }
 
       return _buildLibraryMusicQueueSource(
-        parentId: [currentItem.id],
-        recursive: recursive,
+        parentId: state.folderOverwrite.keys.map((e) => e.id).toList(),
+        recursive: true,
         shuffle: shuffle,
       );
     }
@@ -681,7 +721,7 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
     if (state.views.hasEnabled) {
       return _buildLibraryMusicQueueSource(
         parentId: state.views.included.map((e) => e.id).toList(),
-        recursive: recursive,
+        recursive: true,
         shuffle: shuffle,
       );
     }
@@ -712,16 +752,15 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
 
     if (state.folderOverwrite.isNotEmpty) {
       return _buildPhotoQueueSource(
-        parentId: state.folderOverwrite.last.id,
+        parentId: state.folderOverwrite.included.map((e) => e.id).toList(),
         recursive: recursive,
         shuffle: shuffle,
       );
     }
 
     if (state.views.hasEnabled) {
-      if (state.views.included.length != 1) return null;
       return _buildPhotoQueueSource(
-        parentId: state.views.included.first.id,
+        parentId: state.views.included.map((e) => e.id).toList(),
         recursive: recursive,
         shuffle: shuffle,
       );
@@ -739,13 +778,13 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
   }
 
   PhotoQueueSource _buildPhotoQueueSource({
-    required String? parentId,
+    required List<String>? parentId,
     required bool? recursive,
     required bool shuffle,
   }) {
     return PhotoQueueSource(
       libraryState: state,
-      parentId: parentId,
+      parentIds: parentId,
       recursive: recursive,
       shuffle: shuffle,
       limit: _libraryPhotoFetchLimit,
@@ -767,6 +806,7 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
           limit: _libraryMusicInitialQueueLimit,
           startIndex: 0,
         );
+
         if (initialQueue.isEmpty) return null;
 
         final model = await ref.read(playbackModelHelper).createPlaybackModel(
@@ -945,7 +985,11 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
   }
 
   void saveFilter(LibraryFiltersModel model) => ref.read(filterProvider.notifier).saveFilter(
-        model,
+        model.copyWith(
+          viewNames: state.folderOverwrite.isNotEmpty
+              ? state.folderOverwrite.included.map((e) => e.name).toList()
+              : state.views.included.map((e) => e.name).toList(),
+        ),
       );
 
   void saveFiltersNew(String newName) => ref.read(filterProvider.notifier).saveFilter(
@@ -967,6 +1011,9 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
             isFavourite: model.isFavourite,
             id: model.id,
             showInSideBar: model.showInSideBar,
+            viewNames: state.folderOverwrite.isNotEmpty
+                ? state.folderOverwrite.included.map((e) => e.name).toList()
+                : state.views.included.map((e) => e.name).toList(),
           ),
         );
   }
@@ -979,6 +1026,11 @@ class LibrarySearchNotifier extends StateNotifier<LibrarySearchModel> {
         ),
       ),
     );
+  }
+
+  void setFolderOverwrite(Map<ItemBaseModel, bool> value) async {
+    loadedFilters = false;
+    state = state.copyWith(folderOverwrite: value);
   }
 }
 

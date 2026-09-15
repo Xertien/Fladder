@@ -5,11 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 import 'package:fladder/models/items/album_model.dart';
+import 'package:fladder/models/items/images_models.dart';
+import 'package:fladder/models/playback/playback_queue_source.dart';
 import 'package:fladder/providers/items/album_details_provider.dart';
 import 'package:fladder/providers/settings/client_settings_provider.dart';
 import 'package:fladder/providers/user_provider.dart';
 import 'package:fladder/providers/video_player_provider.dart';
 import 'package:fladder/routes/auto_router.gr.dart';
+import 'package:fladder/screens/details_screens/tracks_detail_screen.dart';
 import 'package:fladder/screens/shared/detail_scaffold.dart';
 import 'package:fladder/screens/shared/fladder_notification_overlay.dart';
 import 'package:fladder/screens/shared/media/components/poster_placeholder.dart';
@@ -38,6 +41,34 @@ class AlbumDetailScreen extends ConsumerStatefulWidget {
 
 class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
   late final AlbumDetailsNotifier provider = ref.read(albumDetailsProvider(widget.item.id).notifier);
+  Color? _posterColor;
+  String? _lastPosterId;
+
+  void _updatePosterColor(ImageData? imageData) {
+    if (imageData == null) {
+      _posterColor = null;
+      _lastPosterId = null;
+      return;
+    }
+
+    final posterId = imageData.key.isNotEmpty ? imageData.key : imageData.path;
+
+    if (posterId == _lastPosterId) {
+      return;
+    }
+
+    _lastPosterId = posterId;
+    final imageProvider = imageData.imageProvider;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+
+      final newColor = await getDominantColor(imageProvider);
+      if (!mounted || posterId != _lastPosterId) return;
+
+      setState(() => _posterColor = newColor);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +94,17 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
     final smallScreen = AdaptiveLayout.viewSizeOf(context) <= ViewSize.phone;
 
     final albumPoster = current.images?.primary ?? current.images?.backDrop?.firstOrNull;
+    if (albumPoster != null) {
+      _updatePosterColor(albumPoster);
+    } else if (_lastPosterId != null) {
+      _lastPosterId = null;
+      _posterColor = null;
+    }
 
     final derivePosterColor = ref.watch(clientSettingsProvider.select((value) => value.dynamicPosterColors));
+    final fallbackBackgroundColor = current.name.toColor.harmonizeWith(Theme.of(context).colorScheme.surface);
     final backgroundColor = derivePosterColor
-        ? current.name.toColor.harmonizeWith(Theme.of(context).colorScheme.surface)
+        ? (albumPoster != null ? (_posterColor ?? fallbackBackgroundColor) : fallbackBackgroundColor)
         : Theme.of(context).colorScheme.surface;
 
     final isFavourite = album?.userData.isFavourite ?? false;
@@ -79,7 +117,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
       onRefresh: () async {
         await provider.fetchDetails(widget.item);
       },
-      dominantColor: derivePosterColor ? backgroundColor : null,
+      dominantColor: derivePosterColor ? (_posterColor ?? backgroundColor) : null,
       actions: (context) => current.generateActions(
         context,
         ref,
@@ -214,9 +252,15 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                                           ),
                                           SelectableIconButton(
                                             onPressed: tracks.isNotEmpty
-                                                ? () async {
-                                                    await album.playInstantMix(detailsContext, ref);
-                                                  }
+                                                ? () => showTracksDetailsScreen(
+                                                      context: detailsContext,
+                                                      item: album!,
+                                                      ref: ref,
+                                                      queueSource: AlbumInstantMixQueueSource(
+                                                        albumId: album.id,
+                                                        limit: 200,
+                                                      ),
+                                                    )
                                                 : null,
                                             selected: false,
                                             icon: IconsaxPlusLinear.blend_2,
