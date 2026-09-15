@@ -2187,5 +2187,10 @@
     "quiet": "Hiljainen",
     "loud": "Voimakas",
     "share": "Jaa",
-    "setAs": "Aseta"
+    "setAs": "Aseta",
+    "integrations": "Integraatiot",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Näytä Discord-profiilissasi, mitä katsot tai kuuntelet. Vaatii Discordin työpöytäsovelluksen olevan käynnissä.",
+    "paused": "Keskeytetty",
+    "idling": "Jouten"
 }

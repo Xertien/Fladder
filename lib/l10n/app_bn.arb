@@ -2,5 +2,10 @@
     "nativeName": "ইংরাজী",
     "accept": "মেনে নিচ্ছি",
     "active": "স্বক্রিয়",
-    "addAsFavorite": "পছন্দের তালিকাতে যোগ করুন"
+    "addAsFavorite": "পছন্দের তালিকাতে যোগ করুন",
+    "integrations": "ইন্টিগ্রেশন",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "আপনি কী দেখছেন বা শুনছেন তা আপনার Discord প্রোফাইলে দেখান। Discord ডেস্কটপ অ্যাপ চালু থাকা প্রয়োজন।",
+    "paused": "বিরতি দেওয়া হয়েছে",
+    "idling": "নিষ্ক্রিয়"
 }

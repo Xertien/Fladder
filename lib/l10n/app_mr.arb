@@ -1272,5 +1272,10 @@
             }
         }
     },
-    "today": "आज"
+    "today": "आज",
+    "integrations": "एकत्रीकरणे",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "तुम्ही काय पाहत आहात किंवा ऐकत आहात ते तुमच्या Discord प्रोफाइलवर दाखवा. Discord डेस्कटॉप अ‍ॅप सुरू असणे आवश्यक आहे.",
+    "paused": "थांबवले",
+    "idling": "निष्क्रिय"
 }

@@ -1293,5 +1293,10 @@
     "videoScalingFitHeight": "Għoli it-Tul",
     "@videoScalingFitHeight": {},
     "videoScalingFitWidth": "Għoli il-wisa'",
-    "@videoScalingFitWidth": {}
+    "@videoScalingFitWidth": {},
+    "integrations": "Integrazzjonijiet",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Uri x'qed tara jew tisma' fil-profil tiegħek ta' Discord. Teħtieġ li l-app tad-desktop ta' Discord tkun qed taħdem.",
+    "paused": "Pawżat",
+    "idling": "Inattiv"
 }

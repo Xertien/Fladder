@@ -613,5 +613,10 @@
     "subtitles": "כתוביות",
     "switchUser": "החלף משתמש",
     "sync": "סנכרן",
-    "hideEmpty": "הסתר ריק"
+    "hideEmpty": "הסתר ריק",
+    "integrations": "אינטגרציות",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "הצג מה אתה צופה או מאזין לו בפרופיל הדיסקורד שלך. דורש שאפליקציית שולחן העבודה של דיסקורד תפעל.",
+    "paused": "מושהה",
+    "idling": "במנוחה"
 }

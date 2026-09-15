@@ -798,5 +798,10 @@
             }
         }
     },
-    "syncOverlaySyncing": "Adatok szinkronizálása"
+    "syncOverlaySyncing": "Adatok szinkronizálása",
+    "integrations": "Integrációk",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Mutasd meg a Discord-profilodon, mit nézel vagy hallgatsz. A Discord asztali alkalmazásnak futnia kell.",
+    "paused": "Szüneteltetve",
+    "idling": "Tétlen"
 }

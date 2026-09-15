@@ -1919,5 +1919,10 @@
     "seerrSeries": "Descobrir Séries",
     "today": "Hoje",
     "anyLanguage": "Qualquer idioma",
-    "enableEdgeGesturesTitle": "Ativar gestos de borda"
+    "enableEdgeGesturesTitle": "Ativar gestos de borda",
+    "integrations": "Integrações",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Mostra o que estás a ver ou a ouvir no teu perfil do Discord. Requer que a aplicação de ambiente de trabalho do Discord esteja em execução.",
+    "paused": "Em pausa",
+    "idling": "Inativo"
 }

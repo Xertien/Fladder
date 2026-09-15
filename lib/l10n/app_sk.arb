@@ -698,5 +698,10 @@
     "copyLoginLink": "Kopírovať link",
     "includePassword": "Zahrnúť heslo",
     "invalidAuthLink": "Nesprávna adresa prihlásenia",
-    "gestures": "Gestá"
+    "gestures": "Gestá",
+    "integrations": "Integrácie",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Zobrazte vo svojom profile Discord, čo práve sledujete alebo počúvate. Vyžaduje spustenú desktopovú aplikáciu Discord.",
+    "paused": "Pozastavené",
+    "idling": "Nečinný"
 }

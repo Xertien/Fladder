@@ -784,5 +784,10 @@
                 "example": "2"
             }
         }
-    }
+    },
+    "integrations": "연동",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "시청 또는 청취 중인 콘텐츠를 Discord 프로필에 표시합니다. Discord 데스크톱 앱이 실행 중이어야 합니다.",
+    "paused": "일시정지됨",
+    "idling": "대기 중"
 }

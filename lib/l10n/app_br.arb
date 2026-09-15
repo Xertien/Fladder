@@ -328,5 +328,10 @@
     "seerrDetails": "Munudoù Seerr",
     "musicDashboard": "Taolenn-vourzh sonerezh",
     "quiet": "Sioul",
-    "loud": "Kreñv"
+    "loud": "Kreñv",
+    "integrations": "Enframmadurioù",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Diskouez petra emaoc'h o sellet pe o selaou war ho profil Discord. Ret eo d'an arload Discord war ar burev bezañ o vont en-dro.",
+    "paused": "Ehanet",
+    "idling": "Dilabour"
 }

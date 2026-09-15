@@ -2048,5 +2048,10 @@
     "fallbackMaxBitrate": "Maksimal Fallback Bitrate (Mbps)",
     "concurrentStreams": "Maks Samtidige Streams",
     "concurrentStreamsHint": "0 = Ubegrænset",
-    "allowFmp4Container": "Tillad fMP4 transcoding container"
+    "allowFmp4Container": "Tillad fMP4 transcoding container",
+    "integrations": "Integrationer",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Vis hvad du ser eller lytter til på din Discord-profil. Kræver, at Discord-skrivebordsappen kører.",
+    "paused": "Sat på pause",
+    "idling": "Inaktiv"
 }

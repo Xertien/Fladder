@@ -2091,5 +2091,10 @@
         }
     },
     "playItems": "播放项目",
-    "shuffleItems": "随机排列项目"
+    "shuffleItems": "随机排列项目",
+    "integrations": "集成",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "在你的 Discord 个人资料上显示你正在观看或收听的内容。需要运行 Discord 桌面应用。",
+    "paused": "已暂停",
+    "idling": "空闲中"
 }

@@ -1077,5 +1077,10 @@
     "showMore": "Zobrazit více",
     "itemColorsTitle": "Barva položky",
     "clientSettingsUseSystemIMETitle": "Použití systémové klávesnice",
-    "homeBannerTV": "TV"
+    "homeBannerTV": "TV",
+    "integrations": "Integrace",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Zobrazte na svém profilu Discord, co právě sledujete nebo posloucháte. Vyžaduje spuštěnou desktopovou aplikaci Discord.",
+    "paused": "Pozastaveno",
+    "idling": "Nečinný"
 }

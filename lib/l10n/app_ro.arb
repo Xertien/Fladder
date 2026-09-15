@@ -1231,5 +1231,10 @@
     "television": "Televizor",
     "@television": {},
     "layoutModeDual": "Dual",
-    "@layoutModeDual": {}
+    "@layoutModeDual": {},
+    "integrations": "Integrări",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Arată ce vizionezi sau asculți pe profilul tău de Discord. Necesită ca aplicația desktop Discord să fie pornită.",
+    "paused": "În pauză",
+    "idling": "Inactiv"
 }

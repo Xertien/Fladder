@@ -940,5 +940,10 @@
     "settingsPlayerMobileWarning": "Å skru på maskinvareaskelerasjon og systemspesifikke libass-undertekster på Android kan føre til at noen undertekster ikke vises.",
     "@settingsPlayerMobileWarning": {},
     "nativeName": "Norsk bokmål",
-    "@nativeName": {}
+    "@nativeName": {},
+    "integrations": "Integrasjoner",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Vis hva du ser på eller lytter til på Discord-profilen din. Krever at Discord-skrivebordsappen kjører.",
+    "paused": "Satt på pause",
+    "idling": "Inaktiv"
 }

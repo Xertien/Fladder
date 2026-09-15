@@ -572,5 +572,10 @@
     "contentRating": "Innehållsbetyg",
     "settingsBlurredPlaceholderDesc": "Visa suddig bakgrund när du laddar affischer",
     "settingsContinue": "Fortsätt",
-    "settingsHomeBannerDescription": "Visa som en bildspel, karusell eller dölja bannern"
+    "settingsHomeBannerDescription": "Visa som en bildspel, karusell eller dölja bannern",
+    "integrations": "Integrationer",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Visa vad du tittar på eller lyssnar på i din Discord-profil. Kräver att Discords skrivbordsapp körs.",
+    "paused": "Pausad",
+    "idling": "Inaktiv"
 }

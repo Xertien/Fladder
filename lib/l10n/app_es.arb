@@ -2054,5 +2054,10 @@
     "pictureInPictureNotSupported": "Imagen dentro de imagen no está disponible en este dispositivo",
     "@pictureInPictureNotSupported": {
         "description": "Snackbar shown when the user taps the PiP button and the OS reports it unsupported"
-    }
+    },
+    "integrations": "Integraciones",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Muestra lo que estás viendo o escuchando en tu perfil de Discord. Requiere que la aplicación de escritorio de Discord esté en ejecución.",
+    "paused": "En pausa",
+    "idling": "Inactivo"
 }

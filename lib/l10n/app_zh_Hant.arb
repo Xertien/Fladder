@@ -1856,5 +1856,10 @@
     "hidePlayedInLatestTitle": "隱藏已觀看內容",
     "hidePlayedInLatestDescription": "隱藏「最近新增的影片」中已觀看的內容",
     "groupedFoldersTitle": "分組媒體庫",
-    "groupedFoldersDescription": "自動將以下媒體庫的內容分組為「電影」、「音樂」和「電視節目」等檢視項目。"
+    "groupedFoldersDescription": "自動將以下媒體庫的內容分組為「電影」、「音樂」和「電視節目」等檢視項目。",
+    "integrations": "整合",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "在你的 Discord 個人檔案上顯示你正在觀看或收聽的內容。需要執行 Discord 桌面應用程式。",
+    "paused": "已暫停",
+    "idling": "閒置中"
 }

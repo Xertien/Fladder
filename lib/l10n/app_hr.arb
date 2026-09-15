@@ -783,5 +783,10 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "integrations": "Integracije",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Prikaži što gledaš ili slušaš na svom Discord profilu. Zahtijeva pokrenutu Discord desktop aplikaciju.",
+    "paused": "Pauzirano",
+    "idling": "Neaktivno"
 }

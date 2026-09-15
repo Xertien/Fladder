@@ -1921,5 +1921,10 @@
                 "example": "1"
             }
         }
-    }
+    },
+    "integrations": "Integrações",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Mostra o que você está assistindo ou ouvindo no seu perfil do Discord. Requer que o aplicativo desktop do Discord esteja em execução.",
+    "paused": "Pausado",
+    "idling": "Inativo"
 }

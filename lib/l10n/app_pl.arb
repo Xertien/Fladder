@@ -2058,5 +2058,10 @@
             }
         }
     },
-    "settingsPlayerPlayPauseFadeTitle": "Zanikanie głośności przy pauzie"
+    "settingsPlayerPlayPauseFadeTitle": "Zanikanie głośności przy pauzie",
+    "integrations": "Integracje",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Pokaż na swoim profilu Discord, co oglądasz lub czego słuchasz. Wymaga uruchomionej aplikacji desktopowej Discord.",
+    "paused": "Wstrzymano",
+    "idling": "Bezczynny"
 }

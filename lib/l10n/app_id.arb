@@ -2155,5 +2155,10 @@
     "removeFromQueue": "Hapus dari antrean",
     "musicDashboard": "Dasbor Musik",
     "quiet": "Pelan",
-    "loud": "Keras"
+    "loud": "Keras",
+    "integrations": "Integrasi",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Tampilkan apa yang sedang kamu tonton atau dengarkan di profil Discord-mu. Memerlukan aplikasi desktop Discord yang sedang berjalan.",
+    "paused": "Dijeda",
+    "idling": "Menganggur"
 }

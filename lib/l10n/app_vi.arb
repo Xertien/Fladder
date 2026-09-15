@@ -1551,5 +1551,10 @@
     "settingsLocalUrlSetTitle": "Cấu hình URL cục bộ",
     "@settingsLocalUrlSetTitle": {},
     "settingsLocalUrlSetDesc": "Chỉ định địa chỉ máy chủ cục bộ. Fladder sẽ tự dùng URL này khi thiết bị của ông ở trong cùng mạng.",
-    "@settingsLocalUrlSetDesc": {}
+    "@settingsLocalUrlSetDesc": {},
+    "integrations": "Tích hợp",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Hiển thị nội dung bạn đang xem hoặc nghe trên hồ sơ Discord của bạn. Yêu cầu ứng dụng Discord trên máy tính đang chạy.",
+    "paused": "Đã tạm dừng",
+    "idling": "Đang rảnh"
 }

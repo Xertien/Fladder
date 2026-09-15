@@ -1094,5 +1094,10 @@
     "copyLoginLink": "Copiar enllaç",
     "includePassword": "Incloure contrasenya",
     "invalidAuthLink": "Enllaç d'inici de sessió no valid",
-    "homeBannerDetailed": "Detallat"
+    "homeBannerDetailed": "Detallat",
+    "integrations": "Integracions",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Mostra què estàs veient o escoltant al teu perfil de Discord. Cal que l'aplicació d'escriptori de Discord s'estigui executant.",
+    "paused": "En pausa",
+    "idling": "Inactiu"
 }

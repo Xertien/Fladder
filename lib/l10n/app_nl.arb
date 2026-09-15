@@ -1941,5 +1941,10 @@
             }
         }
     },
-    "anyLanguage": "Een taal"
+    "anyLanguage": "Een taal",
+    "integrations": "Integraties",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Laat op je Discord-profiel zien wat je bekijkt of beluistert. Vereist dat de Discord-desktopapp actief is.",
+    "paused": "Gepauzeerd",
+    "idling": "Inactief"
 }

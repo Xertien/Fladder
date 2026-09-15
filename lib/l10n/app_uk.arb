@@ -1814,5 +1814,10 @@
                 "type": "int"
             }
         }
-    }
+    },
+    "integrations": "Інтеграції",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Показуйте у своєму профілі Discord, що ви дивитеся або слухаєте. Потрібен запущений застосунок Discord для комп'ютера.",
+    "paused": "Призупинено",
+    "idling": "Бездіяльність"
 }

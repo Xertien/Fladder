@@ -2080,5 +2080,10 @@
             }
         }
     },
-    "setAs": "تعيين كـ"
+    "setAs": "تعيين كـ",
+    "integrations": "التكاملات",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "اعرض ما تشاهده أو تستمع إليه على ملفك الشخصي في ديسكورد. يتطلب تشغيل تطبيق ديسكورد على سطح المكتب.",
+    "paused": "متوقف مؤقتًا",
+    "idling": "في وضع الخمول"
 }

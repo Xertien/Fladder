@@ -1961,5 +1961,10 @@
     "quiet": "அமைதியான",
     "loud": "சத்தமாக",
     "share": "பங்கு",
-    "setAs": "என அமைக்கவும்"
+    "setAs": "என அமைக்கவும்",
+    "integrations": "ஒருங்கிணைப்புகள்",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "நீங்கள் பார்ப்பதையோ கேட்பதையோ உங்கள் Discord சுயவிவரத்தில் காட்டுங்கள். Discord டெஸ்க்டாப் செயலி இயங்க வேண்டும்.",
+    "paused": "இடைநிறுத்தப்பட்டது",
+    "idling": "செயலற்ற நிலை"
 }

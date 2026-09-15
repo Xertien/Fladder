@@ -2019,5 +2019,10 @@
     "audioPlayerRepeatAll": "Повторить все",
     "syncPlaylistDeleteTitle": "Удалить синхронизированный плейлист",
     "playerSettingsReplayGainLevelTitle": "Уровень ReplayGain",
-    "removeFromQueue": "Удалить из очереди"
+    "removeFromQueue": "Удалить из очереди",
+    "integrations": "Интеграции",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Показывайте в профиле Discord, что вы смотрите или слушаете. Требуется запущенное настольное приложение Discord.",
+    "paused": "Пауза",
+    "idling": "Бездействие"
 }

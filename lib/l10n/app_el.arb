@@ -829,5 +829,10 @@
         }
     },
     "settingSecurityApplockTitle": "Κλείδωμα Εφαρμογής",
-    "@settingSecurityApplockTitle": {}
+    "@settingSecurityApplockTitle": {},
+    "integrations": "Ενσωματώσεις",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Εμφάνισε τι παρακολουθείς ή ακούς στο προφίλ σου στο Discord. Απαιτείται να εκτελείται η εφαρμογή Discord για υπολογιστή.",
+    "paused": "Σε παύση",
+    "idling": "Σε αδράνεια"
 }

@@ -2084,5 +2084,10 @@
             }
         }
     },
-    "settingsPlayerCrossfadeDesc": "Blende zwischen Titel über, die im selben Album nicht aufeinander folgen"
+    "settingsPlayerCrossfadeDesc": "Blende zwischen Titel über, die im selben Album nicht aufeinander folgen",
+    "integrations": "Integrationen",
+    "discordRichPresenceTitle": "Discord Rich Presence",
+    "discordRichPresenceDesc": "Zeige in deinem Discord-Profil, was du gerade ansiehst oder anhörst. Erfordert die laufende Discord-Desktop-App.",
+    "paused": "Pausiert",
+    "idling": "Untätig"
 }
