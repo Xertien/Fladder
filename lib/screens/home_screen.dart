@@ -59,7 +59,7 @@ enum HomeTabs {
         HomeTabs.dashboard => context.localized.dashboard,
         HomeTabs.library => context.localized.library(0),
         HomeTabs.favorites => context.localized.favorites,
-        HomeTabs.seerr => 'Seerr',
+        HomeTabs.seerr => context.localized.requests,
         HomeTabs.sync => context.localized.sync,
       };
 }

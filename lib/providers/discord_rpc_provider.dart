@@ -145,7 +145,7 @@ class DiscordRpcService {
       'timestamps': {'start': idleSince.millisecondsSinceEpoch},
       'assets': {
         'large_image': 'fladder_icon_512',
-        'large_text': 'Fladder',
+        'large_text': 'Ptaki Cinéma',
       },
     };
   }

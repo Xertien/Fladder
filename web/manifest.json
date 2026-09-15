@@ -1,11 +1,11 @@
 {
-    "name": "Fladder",
-    "short_name": "Fladder",
+    "name": "Ptaki Cinéma",
+    "short_name": "Ptaki Cinéma",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#5B364D",
     "theme_color": "#5B364D",
-    "description": "A simple cross-platform Jellyfin client.",
+    "description": "Frontend Jellyfin de Ptaki Cinéma",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

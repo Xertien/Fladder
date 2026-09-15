@@ -438,7 +438,7 @@
     "libraryShuffleAndPlayItems": "Acak dan putar item",
     "libraryPlayItems": "Putar item",
     "clientSettingsShowAllCollectionsTitle": "Tampilkan Semua Koleksi",
-    "clientSettingsShowAllCollectionsDesc": "Jika diaktifkan, tampilkan semua jenis koleksi, termasuk yang tidak didukung oleh Fladder",
+    "clientSettingsShowAllCollectionsDesc": "Jika diaktifkan, tampilkan semua jenis koleksi, termasuk yang tidak didukung oleh Ptaki Cinéma",
     "stop": "Berhenti",
     "resumeVideo": "Lanjutkan video",
     "closeVideo": "Tutup video",
@@ -488,8 +488,8 @@
     "segmentActionSkipOnce": "Lewati sekali",
     "segmentActionSkip": "Lewati",
     "loading": "Memuat",
-    "exitFladderTitle": "Keluar dari Fladder",
-    "exitFladderDesc": "Apakah Anda yakin ingin menutup Fladder?",
+    "exitFladderTitle": "Keluar dari Ptaki Cinéma",
+    "exitFladderDesc": "Apakah Anda yakin ingin menutup Ptaki Cinéma?",
     "castAndCrew": "Pemeran dan Kru",
     "maxConcurrentDownloadsTitle": "Jumlah maksimum unduhan bersamaan",
     "maxConcurrentDownloadsDesc": "Menetapkan jumlah maksimum unduhan yang dapat dijalankan secara bersamaan. Atur ke 0 untuk menonaktifkan batasan.",
@@ -587,7 +587,7 @@
     "playerSettingsScreensaverDesc": "Pilih screen saver yang akan ditampilkan setelah tidak ada aktivitas pemutar",
     "settingsLocalUrlTitle": "URL Jellyfin Lokal",
     "settingsLocalUrlSetTitle": "Konfigurasikan URL Jellyfin Lokal",
-    "settingsLocalUrlSetDesc": "Tentukan alamat Jellyfin lokal. Fladder akan otomatis menggunakan URL ini saat perangkat Anda berada di jaringan yang sama.",
+    "settingsLocalUrlSetDesc": "Tentukan alamat Jellyfin lokal. Ptaki Cinéma akan otomatis menggunakan URL ini saat perangkat Anda berada di jaringan yang sama.",
     "regenerateTrickplayImages": "Buat ulang gambar trickplay",
     "controlPanel": "Panel Kontrol",
     "controlPanelDesc": "Server, Aktivitas, Pengguna, Perpustakaan",
@@ -1923,7 +1923,7 @@
         }
     },
     "notificationTimerIOSWarning": " iOS menentukan kapan/jika pembaruan benar-benar dijalankan, sehingga notifikasi mungkin tertunda atau tidak muncul sama sekali.",
-    "batteryOptimizationDesc": "Optimasi baterai dapat menunda notifikasi latar belakang untuk Fladder.\nKetuk untuk membuka pengaturan sistem dan nonaktifkan optimasi untuk Fladder agar keandalan notifikasi meningkat.",
+    "batteryOptimizationDesc": "Optimasi baterai dapat menunda notifikasi latar belakang untuk Ptaki Cinéma.\nKetuk untuk membuka pengaturan sistem dan nonaktifkan optimasi untuk Ptaki Cinéma agar keandalan notifikasi meningkat.",
     "updateCheckInterval": "Interval pemeriksaan pembaruan",
     "updateCheckIntervalDesc": "Seberapa sering tugas latar belakang dijalankan",
     "notificationsIntervalClientReminder": "Interval notifikasi diatur untuk semua pengguna.",
@@ -2187,7 +2187,7 @@
     "@pictureInPictureNotSupported": {
         "description": "Snackbar shown when the user taps the PiP button and the OS reports it unsupported"
     },
-    "quitMultipleWindowsDesc": "Anda memiliki {count} jendela yang terbuka. Keluar dari Fladder akan menutup semuanya. Apakah Anda ingin melanjutkan?",
+    "quitMultipleWindowsDesc": "Anda memiliki {count} jendela yang terbuka. Keluar dari Ptaki Cinéma akan menutup semuanya. Apakah Anda ingin melanjutkan?",
     "@quitMultipleWindowsDesc": {
         "placeholders": {
             "count": {

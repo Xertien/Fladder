@@ -1,11 +1,15 @@
 services:
-  fladder:
+  ptaki-cinema:
     #Use "fladder-rootless" for rootless docker setups, otherwise use "fladder"
-    image: ghcr.io/donutware/fladder:latest
+    image: ghcr.io/xertien/fladder:latest
+    container_name: ptaki-cinema
+    restart: unless-stopped
     ports:
       - 80:80
     environment:
-      - BASE_URL=https://server-url #OPTIONAL: Locks the Fladder front-end to a certain jellyfin server
-      - SEERR_BASE_URL=https://seerr-url #OPTIONAL: Presets Seerr base URL
-      - SEERR_HEADER={"key":"value"} #OPTIONAL: JSON object string of Seerr headers
+      # Jellyfin back-end the front-end is locked to; users only type user + password
+      - BASE_URL=https://jellyfin.ptaki.dev
+      # Jellyfin/Seerr are linked: logging in also authenticates against Seerr
+      - SEERR_BASE_URL=https://reqcinema.ptaki.dev
+      #- SEERR_HEADER={"key":"value"} #OPTIONAL: JSON object string of Seerr headers
       - FLADDER_WEBPATH=/ #OPTIONAL: Configures a subpath to run Fladder at

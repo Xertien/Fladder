@@ -14,7 +14,6 @@ import 'package:fladder/providers/crash_log_provider.dart';
 import 'package:fladder/src/video_player_helper.g.dart';
 import 'package:fladder/util/application_info.dart';
 import 'package:fladder/util/fladder_config.dart';
-import 'package:fladder/util/string_extensions.dart';
 import 'package:fladder/util/svg_utils.dart';
 
 bool get isDesktopPlatform {
@@ -68,7 +67,7 @@ Future<AppBootstrapResult> bootstrapApplication(List<String> args) async {
   }
 
   final applicationInfo = ApplicationInfo(
-    name: packageInfo.appName.capitalize(),
+    name: FladderConfig.appName,
     version: packageInfo.version,
     buildNumber: packageInfo.buildNumber,
     platform: defaultTargetPlatform,
