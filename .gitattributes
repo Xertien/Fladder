@@ -1,0 +1,15 @@
+# Normalise every text file to LF in the repository.
+#
+# Without this, core.autocrlf=true on Windows let CRLF get committed for 829
+# files, which broke the macOS build ("/bin/bash^M: bad interpreter") and would
+# have made every upstream merge conflict on every line.
+* text=auto eol=lf
+
+# Windows-native formats keep CRLF.
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+*.iss  text eol=crlf
+
+# Shebangs must never carry a CR.
+*.sh   text eol=lf
