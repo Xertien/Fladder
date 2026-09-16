@@ -6,8 +6,8 @@
 set -e
 
 # Configuration
-APP_NAME="Fladder"
-APP_PATH="build/macos/Build/Products/Release-production/Fladder.app"
+APP_NAME="Ptaki Cinema"
+APP_PATH="build/macos/Build/Products/Release-production/Ptaki Cinema.app"
 DMG_PATH="build/macos/Build/Products/Release-production/macOS.dmg"
 BACKGROUND_IMAGE="assets/macos-dmg/Fladder-DMG-Background.jpg"
 TEMP_DMG_DIR="dmg_temp"
