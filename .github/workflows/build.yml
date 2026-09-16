@@ -570,10 +570,10 @@ jobs:
 
       - name: Move Android
         run: |
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-armeabi-v7a.apk Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-arm64-v8a.apk Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-x86_64.apk Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk || true
-          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}.aab Fladder-Android-${{ steps.version.outputs.version }}.aab
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-armeabi-v7a.apk PtakiCinema-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-arm64-v8a.apk PtakiCinema-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-x86_64.apk PtakiCinema-Android-${{ steps.version.outputs.version }}-x86_64.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}.aab PtakiCinema-Android-${{ steps.version.outputs.version }}.aab
 
       - name: Download Windows portable artifact
         uses: actions/download-artifact@v4
@@ -584,7 +584,7 @@ jobs:
       - name: Compress Windows
         run: |
           cd fladder-windows-portable
-          zip -r ../Fladder-Windows-${{ steps.version.outputs.version }}.zip .
+          zip -r ../PtakiCinema-Windows-${{ steps.version.outputs.version }}.zip .
 
       - name: Download Windows installer artifact
         uses: actions/download-artifact@v4
@@ -593,7 +593,7 @@ jobs:
           path: fladder-windows-installer
 
       - name: Rename Windows installer
-        run: mv fladder-windows-installer/fladder_setup.exe Fladder-Windows-${{ steps.version.outputs.version }}-Setup.exe
+        run: mv fladder-windows-installer/fladder_setup.exe PtakiCinema-Windows-${{ steps.version.outputs.version }}-Setup.exe
 
       - name: Download Artifacts iOS
         uses: actions/download-artifact@v4
@@ -602,7 +602,7 @@ jobs:
           path: fladder-iOS
 
       - name: Move iOS
-        run: mv fladder-iOS/iOS.ipa Fladder-iOS-${{ steps.version.outputs.version }}.ipa
+        run: mv fladder-iOS/iOS.ipa PtakiCinema-iOS-${{ steps.version.outputs.version }}.ipa
 
       - name: Download Artifacts macOS
         uses: actions/download-artifact@v4
@@ -611,7 +611,7 @@ jobs:
           path: fladder-macOS
 
       - name: Move macOS
-        run: mv fladder-macOS/macOS.dmg Fladder-macOS-${{ steps.version.outputs.version }}.dmg
+        run: mv fladder-macOS/macOS.dmg PtakiCinema-macOS-${{ steps.version.outputs.version }}.dmg
 
       - name: Download Artifacts Linux
         uses: actions/download-artifact@v4
@@ -622,7 +622,7 @@ jobs:
       - name: Compress Linux
         run: |
           cd fladder-linux
-          zip -r ../Fladder-Linux-${{ steps.version.outputs.version }}.zip .
+          zip -r ../PtakiCinema-Linux-${{ steps.version.outputs.version }}.zip .
 
       - name: Download Artifacts Linux Flatpak
         if: needs.fetch-info.outputs.build_type == 'release'
@@ -633,7 +633,7 @@ jobs:
 
       - name: Move Linux Flatpak
         if: needs.fetch-info.outputs.build_type == 'release'
-        run: mv fladder-linux-flatpak/Fladder-Linux.flatpak Fladder-Linux-${{ steps.version.outputs.version }}.flatpak
+        run: mv fladder-linux-flatpak/Fladder-Linux.flatpak PtakiCinema-Linux-${{ steps.version.outputs.version }}.flatpak
 
       - name: Download Artifacts Linux AppImage
         uses: actions/download-artifact@v4
@@ -643,8 +643,8 @@ jobs:
 
       - name: Move Linux AppImages
         run: |
-          mv fladder-linux-appimage/Fladder_x86_64.AppImage Fladder-Linux-${{ steps.version.outputs.version }}.AppImage
-          mv fladder-linux-appimage/Fladder_x86_64.AppImage.zsync Fladder-Linux-${{ steps.version.outputs.version }}.AppImage.zsync
+          mv fladder-linux-appimage/Fladder_x86_64.AppImage PtakiCinema-Linux-${{ steps.version.outputs.version }}.AppImage
+          mv fladder-linux-appimage/Fladder_x86_64.AppImage.zsync PtakiCinema-Linux-${{ steps.version.outputs.version }}.AppImage.zsync
       - name: Download Artifacts Web
         uses: actions/download-artifact@v4
         with:
@@ -654,7 +654,7 @@ jobs:
       - name: Compress Web
         run: |
           cd fladder-web
-          zip -r ../Fladder-Web-${{ steps.version.outputs.version }}.zip .
+          zip -r ../PtakiCinema-Web-${{ steps.version.outputs.version }}.zip .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2.2.2
@@ -668,19 +668,19 @@ jobs:
           generate_release_notes: ${{ needs.fetch-info.outputs.build_type == 'release' }}
           fail_on_unmatched_files: true
           files: |
-            Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk
-            Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk
-            Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk
-            Fladder-Android-${{ steps.version.outputs.version }}.aab
-            Fladder-Windows-${{ steps.version.outputs.version }}-Setup.exe
-            Fladder-Windows-${{ steps.version.outputs.version }}.zip
-            Fladder-iOS-${{ steps.version.outputs.version }}.ipa
-            Fladder-macOS-${{ steps.version.outputs.version }}.dmg
-            Fladder-Web-${{ steps.version.outputs.version }}.zip
-            Fladder-Linux-${{ steps.version.outputs.version }}.zip
-            Fladder-Linux-${{ steps.version.outputs.version }}.AppImage
-            Fladder-Linux-${{ steps.version.outputs.version }}.AppImage.zsync
-            ${{ needs.fetch-info.outputs.build_type == 'release' && format('Fladder-Linux-{0}.flatpak', steps.version.outputs.version) || '' }}
+            PtakiCinema-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk
+            PtakiCinema-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk
+            PtakiCinema-Android-${{ steps.version.outputs.version }}-x86_64.apk
+            PtakiCinema-Android-${{ steps.version.outputs.version }}.aab
+            PtakiCinema-Windows-${{ steps.version.outputs.version }}-Setup.exe
+            PtakiCinema-Windows-${{ steps.version.outputs.version }}.zip
+            PtakiCinema-iOS-${{ steps.version.outputs.version }}.ipa
+            PtakiCinema-macOS-${{ steps.version.outputs.version }}.dmg
+            PtakiCinema-Web-${{ steps.version.outputs.version }}.zip
+            PtakiCinema-Linux-${{ steps.version.outputs.version }}.zip
+            PtakiCinema-Linux-${{ steps.version.outputs.version }}.AppImage
+            PtakiCinema-Linux-${{ steps.version.outputs.version }}.AppImage.zsync
+            ${{ needs.fetch-info.outputs.build_type == 'release' && format('PtakiCinema-Linux-{0}.flatpak', steps.version.outputs.version) || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
