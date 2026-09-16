@@ -247,7 +247,9 @@ jobs:
         uses: actions/upload-artifact@v4.0.0
         with:
           name: fladder-windows-installer
-          path: windows\Output\fladder_setup.exe
+          path: windows\Output\ptaki_cinema_setup.exe
+          # fail here rather than letting create_release die later on a missing artifact
+          if-no-files-found: error
 
   build-ios:
     runs-on: macos-latest
