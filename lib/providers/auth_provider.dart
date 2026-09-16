@@ -192,8 +192,12 @@ class AuthNotifier extends StateNotifier<LoginScreenModel> {
 
   Future<void> setServer(String server) async {
     if (state.hasBaseUrl) {
-      if (!await _hasLocalNetworkPermission(FladderConfig.baseUrl!)) return;
-      await _fetchServerInfo(FladderConfig.baseUrl!);
+      final preset = FladderConfig.baseUrl!;
+      if (!await _hasLocalNetworkPermission(preset)) return;
+      // Run the same probe/normalise step a hand-typed URL gets. Skipping it meant
+      // a configured server was the only URL in the app that stayed un-normalised.
+      final result = await probeAndNormalizeUrl(preset, probeJellyfinUrl);
+      await _fetchServerInfo(result.url);
       return;
     }
     final trimmed = server.trim();
