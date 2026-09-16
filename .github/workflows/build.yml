@@ -120,8 +120,6 @@ jobs:
         shell: bash
 
   build-android:
-    # Skipped on this fork: release signing requires the upstream keystore secrets
-    if: false
     needs: [fetch-info]
     runs-on: ubuntu-latest
     outputs:
@@ -312,7 +310,12 @@ jobs:
       - name: Ensure correct app name casing
         run: |
           APP_DIR="build/macos/Build/Products/Release-production"
-          mv "$APP_DIR/fladder.app" "$APP_DIR/Fladder.app"
+          # Flutter emits the bundle using its own casing; normalise whatever
+          # it produced to the name create_dmg.sh expects.
+          SRC="$(find "$APP_DIR" -maxdepth 1 -name "*.app" | head -1)"
+          if [ "$SRC" != "$APP_DIR/Ptaki Cinema.app" ]; then
+            mv "$SRC" "$APP_DIR/Ptaki Cinema.app"
+          fi
 
       - name: Install create-dmg
         run: brew install create-dmg
@@ -464,6 +467,7 @@ jobs:
     name: Create Release
     needs:
       - fetch-info
+      - build-android
       - build-windows
       - build-ios
       - build-macos
@@ -558,6 +562,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Download Artifacts Android
+        uses: actions/download-artifact@v4
+        with:
+          name: fladder-android
+          path: fladder-android
+
+      - name: Move Android
+        run: |
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-armeabi-v7a.apk Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-arm64-v8a.apk Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}-x86_64.apk Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk || true
+          mv fladder-android/${{ needs.build-android.outputs.artifact_suffix }}.aab Fladder-Android-${{ steps.version.outputs.version }}.aab
+
       - name: Download Windows portable artifact
         uses: actions/download-artifact@v4
         with:
@@ -651,6 +668,10 @@ jobs:
           generate_release_notes: ${{ needs.fetch-info.outputs.build_type == 'release' }}
           fail_on_unmatched_files: true
           files: |
+            Fladder-Android-${{ steps.version.outputs.version }}-arm64-v8a.apk
+            Fladder-Android-${{ steps.version.outputs.version }}-armeabi-v7a.apk
+            Fladder-Android-${{ steps.version.outputs.version }}-x86_64.apk
+            Fladder-Android-${{ steps.version.outputs.version }}.aab
             Fladder-Windows-${{ steps.version.outputs.version }}-Setup.exe
             Fladder-Windows-${{ steps.version.outputs.version }}.zip
             Fladder-iOS-${{ steps.version.outputs.version }}.ipa
