@@ -12,6 +12,7 @@ import 'package:fladder/screens/shared/fladder_icon.dart';
 import 'package:fladder/screens/shared/fladder_logo.dart';
 import 'package:fladder/screens/shared/media/external_urls.dart';
 import 'package:fladder/util/application_info.dart';
+import 'package:fladder/util/fladder_config.dart';
 import 'package:fladder/util/list_padding.dart';
 import 'package:fladder/util/localization_helper.dart';
 
@@ -55,6 +56,11 @@ class AboutSettingsPage extends ConsumerWidget {
             Text(context.localized.aboutBuild(applicationInfo.buildNumber)),
             const SizedBox(height: 16),
             Text(context.localized.aboutCreatedBy),
+            Text(
+              FladderConfig.modificationNotice,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ],
         ),
         const FractionallySizedBox(

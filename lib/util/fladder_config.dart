@@ -23,6 +23,13 @@ class FladderConfig {
   /// derives that from the pubspec package name (`fladder`).
   static const String appName = String.fromEnvironment('FLADDER_APP_NAME', defaultValue: 'Ptaki Cinéma');
 
+  /// GPLv3 section 5(a): a modified work must carry prominent notices
+  /// stating that it was changed, and the date of the change.
+  static const String modificationNotice = String.fromEnvironment(
+    'FLADDER_MODIFICATION_NOTICE',
+    defaultValue: 'Custom build for Ptaki Cinéma by Xertien — modified from Fladder, 2026',
+  );
+
   static String? _clean(String? value) => (value == null || value.isEmpty) ? null : value;
 
   static String? get baseUrl => _instance._baseUrl ?? _clean(_envBaseUrl);
