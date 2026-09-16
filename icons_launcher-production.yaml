@@ -3,7 +3,7 @@ icons_launcher:
   platforms:
     android:
       adaptive_foreground_image: "icons/production/ptaki_icon.png"
-      adaptive_background_color: "#0d1b2a"
+      adaptive_background_color: "#19120C"
       adaptive_monochrome_image: "icons/production/ptaki_adaptive_icon.png"
       notification_image: icons/ptaki_notification_icon.png
       enable: true

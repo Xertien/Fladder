@@ -241,8 +241,8 @@ flutter:
           style: italic
 
 flutter_native_splash:
-  color: "#0d1b2a"
-  color_dark: "#0d1b2a"
+  color: "#19120C"
+  color_dark: "#19120C"
   image: icons/production/ptaki_icon.png
   image_dark: icons/production/ptaki_icon.png
   android: true

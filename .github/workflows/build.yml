@@ -593,7 +593,7 @@ jobs:
           path: fladder-windows-installer
 
       - name: Rename Windows installer
-        run: mv fladder-windows-installer/fladder_setup.exe PtakiCinema-Windows-${{ steps.version.outputs.version }}-Setup.exe
+        run: mv fladder-windows-installer/ptaki_cinema_setup.exe PtakiCinema-Windows-${{ steps.version.outputs.version }}-Setup.exe
 
       - name: Download Artifacts iOS
         uses: actions/download-artifact@v4

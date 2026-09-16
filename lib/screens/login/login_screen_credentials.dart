@@ -119,50 +119,56 @@ class _LoginScreenCredentialsState extends ConsumerState<LoginScreenCredentials>
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 16,
       children: [
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 8,
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: IconButton.filledTonal(
-                  onPressed: () => provider.goUserSelect(),
-                  icon: const Icon(
-                    IconsaxPlusLinear.arrow_left_2,
-                  ),
-                ),
-              ),
-              if (!hasBaseUrl)
-                Expanded(
-                  child: OutlinedTextField(
-                    controller: serverTextController,
-                    onSubmitted: (value) => provider.setServer(value),
-                    autoFillHints: const [AutofillHints.url],
-                    keyboardType: TextInputType.url,
-                    autocorrect: false,
-                    textInputAction: TextInputAction.go,
-                    label: context.localized.server,
-                    errorText: urlError,
-                  ),
-                ),
-              AspectRatio(
-                aspectRatio: 1,
-                child: Tooltip(
-                  message: context.localized.retrievePublicListOfUsers,
-                  waitDuration: const Duration(seconds: 1),
-                  child: IconButton.filled(
-                    onPressed: () => provider.setServer(serverTextController.text),
-                    icon: const Icon(
-                      IconsaxPlusLinear.refresh,
+        // With the server fixed by configuration there is nothing to type or to
+        // refresh here, so this row only survives while it still has a purpose:
+        // getting back to the account list.
+        if (!hasBaseUrl || existingUsers.isNotEmpty)
+          IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 8,
+              children: [
+                if (existingUsers.isNotEmpty)
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: IconButton.filledTonal(
+                      onPressed: () => provider.goUserSelect(),
+                      icon: const Icon(
+                        IconsaxPlusLinear.arrow_left_2,
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                if (!hasBaseUrl) ...[
+                  Expanded(
+                    child: OutlinedTextField(
+                      controller: serverTextController,
+                      onSubmitted: (value) => provider.setServer(value),
+                      autoFillHints: const [AutofillHints.url],
+                      keyboardType: TextInputType.url,
+                      autocorrect: false,
+                      textInputAction: TextInputAction.go,
+                      label: context.localized.server,
+                      errorText: urlError,
+                    ),
+                  ),
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Tooltip(
+                      message: context.localized.retrievePublicListOfUsers,
+                      waitDuration: const Duration(seconds: 1),
+                      child: IconButton.filled(
+                        onPressed: () => provider.setServer(serverTextController.text),
+                        icon: const Icon(
+                          IconsaxPlusLinear.refresh,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
-        ),
         if (serverCredentials == null)
           Column(
             mainAxisSize: MainAxisSize.max,
