@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 import 'package:fladder/jellyfin/jellyfin_open_api.swagger.dart';
 import 'package:fladder/models/account_model.dart';
@@ -35,6 +36,8 @@ class AuthNotifier extends StateNotifier<LoginScreenModel> {
   AuthNotifier(this.ref) : super(LoginScreenModel());
 
   final Ref ref;
+
+  static final Logger _log = Logger('Auth');
 
   late final JellyService api = ref.read(jellyApiProvider);
 
@@ -89,11 +92,14 @@ class AuthNotifier extends StateNotifier<LoginScreenModel> {
 
       final seerrUrl = _findSeerrUrlForServer(serverId);
       setTempSeerrUrl(seerrUrl);
-    } catch (e) {
+    } catch (e, stackTrace) {
       state = state.copyWith(
         errorMessage: localContext?.localized.invalidUrl,
         loading: false,
       );
+      // Without this the real cause (CORS, DNS, TLS, 401...) is invisible:
+      // the snack bar only ever says "unable to connect".
+      _log.severe('Failed to reach server "$url"', e, stackTrace);
       FladderSnack.show(localContext?.localized.unableToConnectHost ?? "");
     }
   }
