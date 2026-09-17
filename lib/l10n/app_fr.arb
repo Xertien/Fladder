@@ -1525,6 +1525,7 @@
     "seerrEnterServerUrlFirst": "Entrez d'abord l'URL du serveur Seerr",
     "seerrApiKeySaved": "Clé API enregistrée",
     "seerrLoggedIn": "Connecté à Seerr",
+    "loggedInToApp": "Connecté à {appName}",
     "seerrConnectedToServer": "Connecté au serveur Seerr : {serverUrl}",
     "@seerrConnectedToServer": {
         "placeholders": {

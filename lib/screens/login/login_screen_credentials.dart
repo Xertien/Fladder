@@ -402,7 +402,7 @@ class _LoginScreenCredentialsState extends ConsumerState<LoginScreenCredentials>
       ref.read(authProvider.notifier).setTempSeerrSessionCookie(null);
 
       if (context.mounted) {
-        FladderSnack.show(context.localized.seerrLoggedIn, context: context);
+        FladderSnack.show(context.localized.loggedInToApp(FladderConfig.appName), context: context);
       }
     } catch (e) {
       if (context.mounted) {

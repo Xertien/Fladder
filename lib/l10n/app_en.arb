@@ -2363,6 +2363,14 @@
   "@seerrApiKeySaved": {},
   "seerrLoggedIn": "Logged in to Seerr",
   "@seerrLoggedIn": {},
+  "loggedInToApp": "Logged in to {appName}",
+  "@loggedInToApp": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
   "seerrConnectedToServer": "Connected to Seerr server: {serverUrl}",
   "@seerrConnectedToServer": {
     "placeholders": {
