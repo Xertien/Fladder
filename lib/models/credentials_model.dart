@@ -39,7 +39,7 @@ abstract class CredentialsModel with _$CredentialsModel {
     };
     final headers = {
       'authorization':
-          'MediaBrowser Token="$token", Client="${application.name}", Device="$os", DeviceId="$deviceId", Version="${application.version}"'
+          'MediaBrowser Token="$token", Client="${application.name.asciiHeaderSafe}", Device="$os", DeviceId="$deviceId", Version="${application.version}"'
     };
     return headers;
   }

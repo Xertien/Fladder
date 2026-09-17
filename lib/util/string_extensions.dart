@@ -3,6 +3,28 @@ import 'package:path/path.dart' as path;
 import 'package:fladder/models/items/item_shared_models.dart';
 
 extension StringExtensions on String {
+  String get asciiHeaderSafe {
+    const folded = {
+      'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a',
+      'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+      'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
+      'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+      'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u',
+      'ç': 'c', 'ñ': 'n', 'ý': 'y', 'ÿ': 'y', 'æ': 'ae', 'œ': 'oe', 'ß': 'ss',
+    };
+    final buffer = StringBuffer();
+    for (final char in split('')) {
+      final lower = char.toLowerCase();
+      final match = folded[lower];
+      if (match != null) {
+        buffer.write(char == lower ? match : match.toUpperCase());
+      } else if (char.codeUnitAt(0) >= 0x20 && char.codeUnitAt(0) <= 0x7E) {
+        buffer.write(char);
+      }
+    }
+    return buffer.toString();
+  }
+
   String capitalize() {
     if (isEmpty) return '';
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
