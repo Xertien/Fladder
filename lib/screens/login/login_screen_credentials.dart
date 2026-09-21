@@ -7,6 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
+import 'package:fladder/screens/shared/media/external_urls.dart';
 import 'package:fladder/models/account_model.dart';
 import 'package:fladder/providers/api_provider.dart';
 import 'package:fladder/providers/auth_provider.dart';
@@ -326,6 +327,17 @@ class _LoginScreenCredentialsState extends ConsumerState<LoginScreenCredentials>
                         ],
                       ),
                     ),
+                  FilledButton(
+                    onPressed: () => launchUrl(context, FladderConfig.resetPasswordUrl),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(context.localized.resetPassword),
+                        const SizedBox(width: 8),
+                        const Icon(IconsaxPlusBold.lock_1),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               if (serverCredentials.serverMessage?.isEmpty == false) ...[

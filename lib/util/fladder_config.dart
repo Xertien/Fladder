@@ -18,6 +18,12 @@ class FladderConfig {
   static const String _envSeerrBaseUrl =
       String.fromEnvironment('FLADDER_SEERR_BASE_URL', defaultValue: 'https://reqcinema.ptaki.dev');
 
+  /// URL of the external password-reset page, opened from the login screen.
+  static const String resetPasswordUrl = String.fromEnvironment(
+    'FLADDER_RESET_PASSWORD_URL',
+    defaultValue: 'https://panelcinema.ptaki.dev/mot-de-passe-oublie',
+  );
+
   /// Display name of the application, used wherever the app names itself.
   /// Kept here rather than read from `packageInfo` because on web Flutter
   /// derives that from the pubspec package name (`fladder`).
